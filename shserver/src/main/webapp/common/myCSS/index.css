@@ -1,0 +1,86 @@
+@charset "utf-8";
+@font-face {
+    font-family: 'AGENCYB';
+    src: url('../fonts/AGENCYB.eot');
+    src: url('../fonts/AGENCYB.eot') format('embedded-opentype'),
+         url('../fonts/AGENCYB.woff2') format('woff2'),
+         url('../fonts/AGENCYB.woff') format('woff'),
+         url('../fonts/AGENCYB.ttf') format('truetype'),
+         url('../fonts/AGENCYB.svg#AGENCYB') format('svg');
+}
+.small-box p {
+    font-size: 30px;
+}
+.clearfix:after,
+.clearfix:before { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }
+.skin-blue .main-header .navbar{ background:#3f4555; }
+.skin-blue .main-header .logo{ background:#3f4555; color: #b0b2b7;}
+.min_center{width: 1200px;margin: 0 auto; padding-top: 50px;}
+.moduld{width: 530px;height: 386px; background: #0089e7;}
+.content-wrapper, .right-side{background:#242834;}
+.skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side{background:#242834;border-right:1px solid #3f4555;}
+.main-sidebar, .left-side{width: 270px;}
+.content-wrapper, .right-side{ margin-left:270px; min-height: 1000px;}
+.skin-blue .main-header .logo:hover{background:#242834;}
+
+.charts{ width: 50%;  height: 500px;}
+.small-box{position: relative;}
+.inner{ overflow: hidden;}
+.innerbar{ display: block; width: 34px; height: 34px;  border: 1px solid #0089e7; border-radius: 2px;}
+.innerdate{ position: absolute;display: block; top: 20px; left: 20px; width: 76px; height: 76px;  border-radius: 2px;font-family: 'AGENCYB'; font-size: 30px; line-height: 76px; text-align: center;}
+.num{position:absolute; left: 120px; top: 40px;}
+.numlast{ left: 190px; border-left: 1px solid #555c6f; padding-left: 20px;}
+.num p{ font-size: 12px; color: #aaabae; line-height: 12px;}
+.num p b{ font-size: 22px;}
+.num p b.blueCol{color: #0089e7;}
+.num p b.orangeCol{color: #fe7930;}
+.num p b.purpleCol{color: #9162fe;}
+.num p b.greenCol{color: #6ccc22;}
+.dateNum{position: absolute; width: 76px;  top: 100px; left: 20px; font-size: 12px; line-height: 20px; text-align: center;}
+.dateNum span{display:inline-block; width: 20px; height: 20px; text-align: center;}
+.before{ float: left;}
+.next{ float: right;}
+/*
+.dateNum em{ display:inline-block; font-style: normal; text-align: center;}*/
+.bluebg{ background: #0089e7;}
+.blueBor{ border: 1px solid #0089e7;}
+.orangebg{ background: #fe7930;}
+.orangeBor{ border: 1px solid #fe7930;}
+.purplebg{ background:url(../images/con_icon1.gif)no-repeat center center #9162fe;}
+.purpleBor{ border: 1px solid #9162fe;}
+.greenbg{ background:url(../images/con_icon2.gif)no-repeat center center #6ccc22;}
+.greenBor{ border: 1px solid #6ccc22;}
+
+.rowM{ margin-top: 70px;}
+.ver1{ width: 40%; float: left;height: 120px; margin: 0 30px;}
+.ver2{ width: 20%; float: left;background: #fe7930;height: 120px;}
+.ver3{ width: 20%;float: left; background: #6ccc22;height: 120px; margin: 0 30px;}
+.left_1{ width: 100%; height: 410px; background: #0089e7;}
+.left_2{ width: 100%; height: 190px; background: #fe7930; margin-top: 30px;}
+.min_1{width: 100%; height: 190px;background: #0089e7;}
+.min_2{width: 100%; height: 190px; margin: 30px 0; background: url(../images/logo.jpg)no-repeat center center #fff;}
+.min_3{width: 100%; height: 190px;background: #fe7930;}
+.right_1{width: 100%; height: 190px;background: #0089e7;}
+.right_2{width: 100%; height: 410px; margin-top: 30px; background: url(../images/vx.jpg)no-repeat center bottom #9162fe;}
+
+.tit_h5{ width: 100%; background: url(../images/con_icon4.gif)no-repeat 20px bottom; width: 100%; height: 60px; font-size: 20px; color: #fff; font-family: "微软雅黑"; line-height: 80px; padding-left: 45px;}
+
+.conIcon1{ float: left; width: 50%;  background: url(../images/con_icon3.gif)no-repeat 70% center; height: 330px;}
+.context{ float: left; width: 30%;}
+.con_tit{font-family: "微软雅黑"; text-align: center; font-size: 20px; line-height: 40px; padding-top: 40px; color: #fff;}
+.con_num{font-family: 'AGENCYB';text-align: center; font-size: 46px;color: #fff;}
+.con_l_tit{ font-size: 36px; line-height: 50px; padding-top: 88px;}
+.con_l_num{ font-size: 72px;}
+
+.bg-aqua, .callout.callout-info, .alert-info, .label-info, .modal-info .modal-body {
+    background-color: #242834 !important;
+}
+
+
+
+
+
+
+

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="e_content" >
+  <resultMap id="BaseResultMap" type="com.shserver.datacenter.domain.EContent" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="co_title" property="coTitle" jdbcType="VARCHAR" />
+    <result column="co_url" property="coUrl" jdbcType="VARCHAR" />
+    <result column="co_desc" property="coDesc" jdbcType="VARCHAR" />
+    <result column="co_img_url" property="coImgUrl" jdbcType="VARCHAR" />
+    <result column="co_se_type" property="coSeType" jdbcType="INTEGER" />
+    <result column="co_status" property="coStatus" jdbcType="INTEGER" />
+    <result column="co_type" property="coType" jdbcType="INTEGER" />
+    <result column="co_create_date" property="coCreateDate" jdbcType="TIMESTAMP" />
+    <result column="co_create_user_id" property="coCreateUserId" jdbcType="INTEGER" />
+    <result column="co_update_date" property="coUpdateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, co_title, co_url, co_desc, co_img_url, co_se_type, co_status, co_type, co_create_date, 
+    co_create_user_id, co_update_date
+  </sql>
+  
+  <select id="queryByType"  resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  	 select 
+    <include refid="Base_Column_List" />
+    from e_content
+    where co_se_type = #{type,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 后台调用 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from e_content
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from e_content
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.shserver.datacenter.domain.EContent" >
+    insert into e_content (co_title, co_url, 
+      co_desc, co_img_url, co_se_type, 
+      co_status, co_type, co_create_date, 
+      co_create_user_id, co_update_date)
+    values (#{coTitle,jdbcType=VARCHAR}, #{coUrl,jdbcType=VARCHAR}, 
+      #{coDesc,jdbcType=VARCHAR}, #{coImgUrl,jdbcType=VARCHAR}, #{coSeType,jdbcType=INTEGER}, 
+      #{coStatus,jdbcType=INTEGER}, #{coType,jdbcType=INTEGER}, NOW(), 
+      #{coCreateUserId,jdbcType=INTEGER}, NOW())
+  </insert>
+  
+  <update id="update" parameterType="com.shserver.datacenter.domain.EContent" >
+    update e_content
+    <set >
+      <if test="coTitle != null" >
+        co_title = #{coTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="coUrl != null" >
+        co_url = #{coUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="coDesc != null" >
+        co_desc = #{coDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="coImgUrl != null" >
+        co_img_url = #{coImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="coSeType != null" >
+        co_se_type = #{coSeType,jdbcType=INTEGER},
+      </if>
+      <if test="coStatus != null" >
+        co_status = #{coStatus,jdbcType=INTEGER},
+      </if>
+      <if test="coType != null" >
+        co_type = #{coType,jdbcType=INTEGER},
+      </if>
+      <if test="coCreateUserId != null" >
+        co_create_user_id = #{coCreateUserId,jdbcType=INTEGER},
+      </if>
+        co_update_date = now()
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!-- 接口查询 -->
+  <select id="queryBySeType"  resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  	 select 
+    <include refid="Base_Column_List" />
+    from e_content
+    where co_se_type = #{type,jdbcType=INTEGER} and co_status='1'
+  </select>
+</mapper>

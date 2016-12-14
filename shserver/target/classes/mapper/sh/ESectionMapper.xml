@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="e_section" >
+  <resultMap id="BaseResultMap" type="com.shserver.datacenter.domain.ESection" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="se_name" property="seName" jdbcType="VARCHAR" />
+    <result column="se_status" property="seStatus" jdbcType="INTEGER" />
+    <result column="se_type" property="seType" jdbcType="INTEGER" />
+    <result column="se_desc" property="seDesc" jdbcType="VARCHAR" />
+    <result column="se_create_date" property="seCreateDate" jdbcType="TIMESTAMP" />
+    <result column="se_create_user_id" property="seCreateUserId" jdbcType="INTEGER" />
+    <result column="se_update_date" property="seUpdateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, se_name, se_status, se_type, se_desc, se_create_date, se_create_user_id, se_update_date
+  </sql>
+  
+   <select id="queryListAll" resultMap="BaseResultMap" >
+	   select 
+	    <include refid="Base_Column_List" />
+	    from e_section where se_type = '1'
+  </select>
+  
+  <select id="selectByPType" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from e_section
+    where se_type = #{type,jdbcType=INTEGER}
+  </select>
+  
+   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from e_section
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <insert id="insert" parameterType="com.shserver.datacenter.domain.ESection" >
+    insert into e_section (se_name, se_status, 
+      se_type, se_desc, se_create_date, 
+      se_create_user_id, se_update_date)
+    values (#{seName,jdbcType=VARCHAR}, #{seStatus,jdbcType=INTEGER}, 
+      #{seType,jdbcType=INTEGER}, #{seDesc,jdbcType=VARCHAR}, now(), 
+      #{seCreateUserId,jdbcType=INTEGER}, now())
+  </insert>
+
+  <update id="update" parameterType="com.shserver.datacenter.domain.ESection" >
+    update e_section
+    <set >
+      <if test="seName != null" >
+        se_name = #{seName,jdbcType=VARCHAR},
+      </if>
+      <if test="seStatus != null" >
+        se_status = #{seStatus,jdbcType=INTEGER},
+      </if>
+      <if test="seType != null" >
+        se_type = #{seType,jdbcType=INTEGER},
+      </if>
+      <if test="seDesc != null" >
+        se_desc = #{seDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="seCreateUserId != null" >
+        se_create_user_id = #{seCreateUserId,jdbcType=INTEGER},
+      </if>
+        se_update_date = now()
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  	<!-- 接口查询 -->
+	  <select id="queryByStatusAndType" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from e_section
+	    where se_type = #{type,jdbcType=INTEGER} and se_status='1'
+	  </select>
+</mapper>

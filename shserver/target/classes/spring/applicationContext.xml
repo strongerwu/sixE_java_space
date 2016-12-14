@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+						http://www.springframework.org/schema/mvc 
+						http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd 
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx-3.0.xsd ">
+						
+		<bean  
+           class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  
+           <property name="messageConverters">  
+               <list>  
+                   <bean class="com.shserver.base.UTF8StringHttpMessageConverter"/>  
+               </list>  
+           </property>  
+       </bean> 
+    <mvc:default-servlet-handler/>  
+   	<!--  启用spring mvc 注解  默认的注解映射的支持 -->  
+    <mvc:annotation-driven /> 
+    
+    <context:annotation-config /> 
+    <!-- 加载properties文件 -->
+    <bean id="propertyConfigurer"
+		class="com.shserver.base.CdpsnPropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/classes/config/*.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!--慢SQL统计配置 -->
+	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+		<!--慢SQL统计，如果SQL执行时间超过一定时间则记录为慢SQL -->
+		<property name="slowSqlMillis" value="1000" />
+		<!--慢SQL统计日志输出 -->
+		<property name="logSlowSql" value="true" />
+		<!--合并SQL统计 例如select * from table t where t.id =1，会被变为select * from table 
+			t where t.id =？来统计 -->
+		<property name="mergeSql" value="true" />
+	</bean>
+	
+	<!-- 数据库  JDBC -->
+    <bean id="log-filter" class="com.alibaba.druid.filter.logging.Log4jFilter"></bean>
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<!-- 基本属性 url、user、password -->
+		<property name="driverClassName" value="${jdbc.driverClassName}"></property>
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<!-- 配置初始化连接数 -->
+		<property name="initialSize" value="20" />
+		<!-- 最小空闲连接数 -->
+		<property name="minIdle" value="2" />
+		<!-- 最大空闲连接数 在druid中无效 <property name="maxIdle" value="10" /> -->
+		<!-- 同时可分配最大连接数 -->
+		<property name="maxActive" value="100" />
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="60000" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<!-- 验证数据连接是否正常 -->
+		<property name="validationQuery" value="SELECT 1 from dual" />
+		<!-- 指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除. -->
+		<property name="testWhileIdle" value="true" />
+		<!-- 当从连接池取连接时，验证这个连接是否有效 -->
+		<property name="testOnBorrow" value="false" />
+		<!-- 当从把该连接放回到连接池的时，验证这个连接是否有效 -->
+		<property name="testOnReturn" value="false" />
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+			value="50" />
+		<!-- 是否删除泄漏连接,如果空闲时间超过removeAbandonedTimeout. 设置为true可以为写法糟糕的没有关闭连接的程序修复数据库连接 -->
+		<property name="removeAbandoned" value="true" />
+		<!-- 泄露的连接可以被删除的超时值, 单位秒 -->
+		<property name="removeAbandonedTimeout" value="72000000" />
+		<!-- 配置监控统计拦截的filters -->
+		<property name="proxyFilters">
+			<list>
+				<ref bean="stat-filter" />
+				<ref bean="log-filter" />
+			</list>
+		</property>
+		<!-- 数据库监控，及日志配置 -->
+		<property name="filters">
+			<value>stat,log4j</value>
+		</property>
+	</bean>
+    
+    <!-- 配置myBatis与Spring le整合的核心类 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:mapper/sqlMapConfig.xml"></property>
+	</bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">    
+        <property name="basePackage" value="classpath:mapper/sqlMapConfig.xml" />    
+    </bean> 
+	
+	
+	
+	<!-- 数据库事务策略 -->
+	<bean id="weshareTransactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<tx:advice id="weshareTxAdvice" transaction-manager="weshareTransactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="ins*" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="sync*" propagation="REQUIRED" />
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="query*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	
+    <!-- aop驱动 -->
+	<aop:aspectj-autoproxy />
+	<context:annotation-config /> 
+	<!-- 包扫描.. -->
+	<context:component-scan base-package="com.shserver" />
+	<bean  class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" /> 
+		<!-- <import resource="classpath:spring/dubboConsumerContext.xml" />
+		<import resource="classpath:spring/dubboProviderContext.xml" /> -->
+		<import resource="classpath:spring/spring-context.xml" />
+   </beans>

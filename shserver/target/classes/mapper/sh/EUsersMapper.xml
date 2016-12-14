@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="e_users" >
+  <resultMap id="BaseResultMap" type="com.shserver.datacenter.domain.EUsers" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="e_user_name" property="eUserName" jdbcType="VARCHAR" />
+    <result column="e_password" property="ePassword" jdbcType="VARCHAR" />
+    <result column="e_nike_name" property="eNikeName" jdbcType="VARCHAR" />
+    <result column="e_desc" property="eDesc" jdbcType="VARCHAR" />
+    <result column="e_status" property="eStatus" jdbcType="INTEGER" />
+    <result column="e_role_id" property="eRoleId" jdbcType="INTEGER" />
+    <result column="e_create_date" property="eCreateDate" jdbcType="TIMESTAMP" />
+    <result column="e_update_date" property="eUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="e_create_user_id" property="eCreateUserId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, e_user_name, e_password, e_nike_name, e_desc, e_status, e_role_id, e_create_date, 
+    e_update_date, e_create_user_id
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from e_users
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="loginQuery" resultMap="BaseResultMap" parameterType="java.util.Map">
+	  select 
+	    <include refid="Base_Column_List" />
+	    from e_users
+	    where e_user_name = #{userName,jdbcType=VARCHAR} and e_password = #{password,jdbcType=VARCHAR}
+  </select>
+  
+  <insert id="insert" parameterType="com.shserver.datacenter.domain.EUsers" >
+    insert into e_users (id, e_user_name, e_password, 
+      e_nike_name, e_desc, e_status, 
+      e_role_id, e_create_date, e_update_date, 
+      e_create_user_id)
+    values (#{id,jdbcType=INTEGER}, #{eUserName,jdbcType=VARCHAR}, #{ePassword,jdbcType=VARCHAR}, 
+      #{eNikeName,jdbcType=VARCHAR}, #{eDesc,jdbcType=VARCHAR}, #{eStatus,jdbcType=INTEGER}, 
+      #{eRoleId,jdbcType=INTEGER}, #{eCreateDate,jdbcType=TIMESTAMP}, #{eUpdateDate,jdbcType=TIMESTAMP}, 
+      #{eCreateUserId,jdbcType=INTEGER})
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.shserver.datacenter.domain.EUsers" >
+    update e_users
+    <set >
+      <if test="eUserName != null" >
+        e_user_name = #{eUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="ePassword != null" >
+        e_password = #{ePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="eNikeName != null" >
+        e_nike_name = #{eNikeName,jdbcType=VARCHAR},
+      </if>
+      <if test="eDesc != null" >
+        e_desc = #{eDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="eStatus != null" >
+        e_status = #{eStatus,jdbcType=INTEGER},
+      </if>
+      <if test="eRoleId != null" >
+        e_role_id = #{eRoleId,jdbcType=INTEGER},
+      </if>
+      <if test="eCreateDate != null" >
+        e_create_date = #{eCreateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eUpdateDate != null" >
+        e_update_date = #{eUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eCreateUserId != null" >
+        e_create_user_id = #{eCreateUserId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

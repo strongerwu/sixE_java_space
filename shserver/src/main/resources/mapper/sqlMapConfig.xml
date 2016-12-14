@@ -1,0 +1,9 @@
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<mappers>
+		<mapper resource="mapper/sh/EUsersMapper.xml" />
+		<mapper resource="mapper/sh/ESectionMapper.xml" />
+		<mapper resource="mapper/sh/EContentMapper.xml" />
+	</mappers>
+</configuration>

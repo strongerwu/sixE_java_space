@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+"-//mybatis.org//DTD MyBatis Generator Configuration 
+1.0//EN"
+"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"
+>
+<generatorConfiguration>
+	<!-- 制定mysql的驱动包的路径 千万别放中文路径下 -->
+	<classPathEntry location="C:\workTools\Jar\mysql-connector-java-5.1.13.jar" />
+	<!-- 配置数据源和生成的代码所存放的位置 -->
+	<context id="context1">
+		
+		<commentGenerator>
+	      <property name="suppressAllComments" value="true" />
+	      <property name="suppressDate" value="true" />
+	    </commentGenerator>
+		<!-- connectionURL="jdbc:mysql://192.168.50.13:3306/ifdb"  -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/six_e_db"
+			userId="root"
+			password="root" />
+		
+		<!-- 所生成的实体类的位置默认资源包src -->
+		<javaModelGenerator targetPackage="com.shserver.datacenter.domain" targetProject="shserver" /> 
+		
+		<!-- 所生成的sqlMap的影射文件的位置,默认资源包src -->
+		<sqlMapGenerator targetPackage="mapper.sh" targetProject="shserver" />
+		
+		<!-- 为哪些表生成代码 tableName:表名 schema:不用填写 -->
+			<!-- 为哪些表生成代码 tableName:表名 schema:不用填写 -->
+		<table schema="" tableName="e_section" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false"
+		>
+		</table>
+		
+	</context>
+</generatorConfiguration>
